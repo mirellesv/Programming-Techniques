@@ -4,35 +4,6 @@ using namespace std;
 
 using iPair = pair<int, int>;
 
-class Graph{
-    private:
-        int V;
-        int E;
-        vector < pair<int, iPair> > edges;
-    public:
-        Graph(int new_V, int new_E){ // Constructor
-            V = new_V;
-            E = new_E;
-        }
-        // Acessors and mutators
-        int getV() const{
-            return V;
-        }
-        void setV(int new_V){
-            V = new_V;
-        }
-        int getE() const{
-            return E;
-        }
-        void setE(int new_E){
-            E = new_E;
-        }
-        void setEdge(int u, int v, int w){
-            edges.push_back({w, {u, v}});
-        }
-        int kruskalMST();
-};
-
 class DisjointSets{
     private:
         int *parent, *rnk;
@@ -71,33 +42,60 @@ class DisjointSets{
         }
 };
 
-int Graph::kruskalMST(){
-    int mst_wt = 0;
-
-    sort(edges.begin(), edges.end());
-
-    DisjointSets ds(V);
-
-    vector< pair<int, iPair> >::iterator it;
-
-    for(it = edges.begin(); it != edges.end(); it++){
-        int u = it->second.first;
-        int v = it->second.second;
-
-        int set_u = ds.find(u);
-        int set_v = ds.find(v);
-
-        if(set_u != set_v){
-            cout << u << " - " << v << endl;
-
-            mst_wt += it->first;
-
-            ds.merge(set_u, set_v);
+class Graph{
+    private:
+        int V;
+        int E;
+        vector < pair<int, iPair> > edges;
+    public:
+        Graph(int new_V, int new_E){ // Constructor
+            V = new_V;
+            E = new_E;
         }
-    }
+        // Acessors and mutators
+        int getV() const{
+            return V;
+        }
+        void setV(int new_V){
+            V = new_V;
+        }
+        int getE() const{
+            return E;
+        }
+        void setE(int new_E){
+            E = new_E;
+        }
+        void setEdge(int u, int v, int w){
+            edges.push_back({w, {u, v}});
+        }
+        int kruskalMST(){
+            int mst_wt = 0;
 
-    return mst_wt;
-}
+            sort(edges.begin(), edges.end());
+
+            DisjointSets ds(V);
+
+            vector< pair<int, iPair> >::iterator it;
+
+            for(it = edges.begin(); it != edges.end(); it++){
+                int u = it->second.first;
+                int v = it->second.second;
+
+                int set_u = ds.find(u);
+                int set_v = ds.find(v);
+
+                if(set_u != set_v){
+                    cout << u << " - " << v << endl;
+
+                    mst_wt += it->first;
+
+                    ds.merge(set_u, set_v);
+                }
+            }
+
+            return mst_wt;
+        }
+};
 
 int main(){
     int V = 9, E = 14;
