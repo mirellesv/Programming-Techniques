@@ -2,7 +2,7 @@
 
 using namespace std;
 
-typedef pair<int, int> iPair;
+using iPair = pair<int, int>;
 
 struct Graph{
     int V, E;
